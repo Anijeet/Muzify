@@ -16,7 +16,7 @@ export default function Home() {
           <span>Connect with fans like never before</span>
         </div>
         <div className="-mb-16 mt-5 ">
-          <button className='p-2 mr-3 rounded-lg bg-gradient-to-b from-slate-600 via-green-400 to-green-600 text-lg font-semibold border-2 border-green-800 ' >Sign Up</button>
+          <button className='p-2 mr-3 rounded-lg bg-gradient-to-b from-slate-500 via-green-400 to-green-600 text-lg font-semibold border-2 border-green-800 ' >Sign Up</button>
           <button className='p-2 bg-white text-black text-lg font-semibold border-2 border-green-800 hover:bg-gray-300 transition-all duration-300 rounded-lg '>Learn More</button>
         </div>
       </div>
@@ -26,12 +26,12 @@ export default function Home() {
         <div className="flex gap-40 mt-10">
           <div className="flex mt-8 flex-col items-center">
             <span className="text-yellow-500 text-5xl" ><MdPeopleAlt/></span>
-            <span className="text-lg font-semibold">Fan Interaaction</span>
+            <span className="text-lg font-semibold">Fan Interaction</span>
             <span className="text-sm ">Lets Fan choose there music</span>
           </div>
           <div className="flex mt-8 flex-col items-center">
             <span className="text-yellow-500 text-5xl" ><MdPeopleAlt/></span>
-            <span className="text-lg font-semibold">Fan Interaaction</span>
+            <span className="text-lg font-semibold">Ultra Music Experience</span>
             <span className="text-sm ">Lets Fan choose there music</span>
           </div>
           <div className="flex mt-8 flex-col items-center">
