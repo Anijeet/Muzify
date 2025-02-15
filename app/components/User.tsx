@@ -1,7 +1,60 @@
+"use client"
 import { Button } from "@/components/ui/button";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { AiOutlineLike } from "react-icons/ai";
+import { BiDislike } from "react-icons/bi";
 
 const User = () => {
+  interface Stream {
+    smallImg: string;
+    url:string;
+    userId:string;
+    title:string;
+    upvotes:number;
+    haveUpvoted:boolean;
+    id:string;
+    
+  }
+
+  const [streams, setStreams] = useState<Stream[]>([])
+  const [loading,setLoading]=useState(false)
+  
+
+  const INTERVAL_MS=1*1000
+
+  async function refershStream(){
+    
+    const res= await axios.get('api/streams/my')
+    console.log('data',res.data.streams)
+    setStreams(res.data.streams)
+    // console.log('streams',streams)
+  }
+
+  useEffect(() => {
+    console.log('Updated streams:', streams);
+}, [streams]);
+  
+
+  useEffect(()=>{
+    refershStream();
+    const interval= setInterval(() => {
+      refershStream();
+    }, INTERVAL_MS);
+   
+  },[])
+
+  async function handleVote(id:string,isUpvote:boolean){
+    await fetch(`/api/streams/${isUpvote ? "upvote" :"downvote" }`,{
+      method:'POST',
+      body:JSON.stringify({
+        streamId:id
+      })
+    })
+    refershStream()
+  }
+  
+
   return (
     <div className="ml-40 pt-5">
       <div className=" flex gap-40 text-white">
@@ -59,102 +112,30 @@ const User = () => {
       </div>
       <div className="p-3 border-2 border-gray-600 bg-slate-800 rounded-2xl mt-5 w-[970px]">
         <h1 className="text-white p-3">Queue Songs</h1>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
+        {streams.map((stream)=>(
+          <div className="flex border-b-2 p-3 border-gray-700">
+          <div className="flex  text-white">
             <img
               className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
+              src={stream.smallImg}
               alt="my img..."
             />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
+            <div className="flex w-[700px] flex-col justify-center ml-3">
+              <div className="text-md">{stream.title.split(/[-\/:]/)[0]}</div>
+              <div className="text-sm text-gray-400">{stream.title.split(/[-\/:]/)[1]}</div>
             </div>
           </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
+          <div className="flex  items-center justify-center gap-2">
+            {/* <h1 className="text-sm text-gray-300">{stream.upvotes}</h1> */}
+            <Button onClick={()=>{handleVote(stream.id,stream.haveUpvoted ? false : true)}} className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
+             { stream.haveUpvoted? <BiDislike /> : <AiOutlineLike /> }
             </Button>
-        </div>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
-            <img
-              className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
-              alt="my img..."
-            />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
-            </div>
+            {/* <Button onClick={downvote} className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
+              <BiDislike />
+            </Button> */}
           </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
-            </Button>
         </div>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
-            <img
-              className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
-              alt="my img..."
-            />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
-            </div>
-          </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
-            </Button>
-        </div>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
-            <img
-              className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
-              alt="my img..."
-            />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
-            </div>
-          </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
-            </Button>
-        </div>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
-            <img
-              className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
-              alt="my img..."
-            />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
-            </div>
-          </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
-            </Button>
-        </div>
-        <div className="flex gap-[750px] border-b-2 p-3 border-gray-700">
-          <div className="flex text-white">
-            <img
-              className="h-10 rounded-2xl w-14"
-              src="https://tse1.mm.bing.net/th?id=OIP.-8xk3avY6rXn2E0RgB0x-AHaFj&pid=Api&P=0&h=180"
-              alt="my img..."
-            />
-            <div className="flex flex-col justify-center ml-3">
-              <div className="text-md">Untitled</div>
-              <div className="text-sm text-gray-400">KR$NA</div>
-            </div>
-          </div>
-          <Button className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
-              Upvote
-            </Button>
-        </div>
+        ))}
       </div>
     </div>
   );

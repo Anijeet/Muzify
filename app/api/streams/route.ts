@@ -21,8 +21,11 @@ export async function POST(req:NextRequest){
                 status:411
             })
         }
-        const extracedId= data.url.split("?v=")[1]
+        
+        const preextracedId= data.url.split("be/")[1]
+        const extracedId=preextracedId.split('?')[0]
         const res = await youtubesearchapi.GetVideoDetails(extracedId)
+        console.log(extracedId)
         const thumbnails=res.thumbnail.thumbnails
         thumbnails.sort((a:{width:number},b:{width:number})=>a.width<b.width ? -1 :1)
         const stream =await prismaClient.stream.create({
@@ -37,10 +40,12 @@ export async function POST(req:NextRequest){
             }
         })
         return NextResponse.json({
-            msg:"Stream has been created",
-            id:stream.id
+            ...stream,
+            haveUpvoted:false,
+            upvotes:0
         })
     } catch (e) {
+        console.log(e)
         return NextResponse.json({
             message:"Something went wrong"
         },{

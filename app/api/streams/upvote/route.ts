@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   if (!user) {
     return NextResponse.json(
       {
-        message: "USer not found",
+        message: "User not found",
       },
       {
         status: 411,
@@ -34,6 +34,9 @@ export async function POST(req: NextRequest) {
             userId:user.id,
             streamId:data.streamId
         }
+    });
+    return NextResponse.json({
+      msg:"Done!"
     })
   } catch (error) {
     return NextResponse.json({

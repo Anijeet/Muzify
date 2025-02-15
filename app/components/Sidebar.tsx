@@ -1,18 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import React, { useState } from "react";
 
 const Sidebar = () => {
+  const [inputLink,setInputLink]=useState("")
+  const [loading,setLoading]=useState(false)
+
+
+  async function addSong(e:React.FormEvent){
+    if(inputLink.length===0){
+      alert("Please enter a link")
+    }
+    e.preventDefault()
+    setLoading(true)
+    const res = await fetch('/api/streams',{
+      method: 'POST',
+      body: JSON.stringify({
+        creatorId:"b8637442-9bdb-44e1-aad2-5b1fba0b63c7",
+        url:inputLink
+      })
+    })
+    setLoading(false)
+    setInputLink('')
+  }
+
   return (
     <div className="fixed  p-6 flex flex-col border-l-2   right-0 h-screen w-80">
       <div>
-        <Textarea
+        <Textarea value={inputLink} onChange={(e)=>{setInputLink(e.target.value)}}
           className="h-40 m-3 -mt-2 bg-gray-800 text-lg text-white placeholder:text-center placeholder:justify-center"
           placeholder="Add link of the song "
         />
       </div>
-      <Button className="bg-white ml-3 w-full text-black">
+      <Button onClick={addSong} className={`bg-white ml-3 w-full hover:bg-gray-300 text-black ${loading ? 'cursor-wait' : 'cursor-pointer'}`}>
         Add to the queue
       </Button>
       <h1 className="text-lg text-white font-semibold m-3">Now Playing</h1>
