@@ -7,25 +7,13 @@ import User from '../components/User'
 import axios from 'axios'
 
 const page = () => {
-  // const INTERVAL_MS=10*1000
-
-  // async function refershStream(){
-  //   const res= await axios.get('api/streams/my')
-    
-  // }
-
-  // useEffect(()=>{
-  //   refershStream();
-  //   const interval= setInterval(() => {
-      
-  //   }, INTERVAL_MS);
-  // },[])
+  const creatorId= "b8637442-9bdb-44e1-aad2-5b1fba0b63c7"
   return (
     <div className="bg-slate-900 min-h-screen w-full relative z-0">
         <Undirect/>
         <Navbar/>
         <Sidebar/>
-        <User/>
+        <User creatorId={creatorId}/>
     </div>
   )
 }

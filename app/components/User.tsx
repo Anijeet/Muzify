@@ -1,11 +1,12 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Share } from "next/font/google";
 import React, { useEffect, useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiDislike } from "react-icons/bi";
 
-const User = () => {
+const User = ({ creatorId }: { creatorId: string }) => {
   interface Stream {
     smallImg: string;
     url:string;
@@ -20,12 +21,13 @@ const User = () => {
   const [streams, setStreams] = useState<Stream[]>([])
   const [loading,setLoading]=useState(false)
   
+  
 
   const INTERVAL_MS=1*1000
 
   async function refershStream(){
     
-    const res= await axios.get('api/streams/my')
+    const res= await axios.get(`/api/streams/?creatorId=${creatorId}`)
     console.log('data',res.data.streams)
     setStreams(res.data.streams)
     // console.log('streams',streams)
@@ -51,12 +53,19 @@ const User = () => {
         streamId:id
       })
     })
+
     refershStream()
+  }
+
+  const share = () =>{
+    const shareUrl = `${window.location.hostname}/creator/${creatorId}`;
+    navigator.clipboard.writeText(shareUrl)
   }
   
 
   return (
     <div className="ml-40 pt-5">
+      <Button onClick={share} className="bg-green-500 text-lg p-2 flex justify-end mb-2 -ml-5 hover:text-white border-2 border-gray-400 text-black">Share</Button>
       <div className=" flex gap-40 text-white">
         <div className=" bg-gray-800 flex flex-col justify-center w-[500px] rounded-2xl p-3">
           <div className="flex text-white">
@@ -126,7 +135,7 @@ const User = () => {
             </div>
           </div>
           <div className="flex  items-center justify-center gap-2">
-            {/* <h1 className="text-sm text-gray-300">{stream.upvotes}</h1> */}
+            <h1 className="text-sm text-gray-300">{stream.upvotes}</h1>
             <Button onClick={()=>{handleVote(stream.id,stream.haveUpvoted ? false : true)}} className="bg-white text-black text-md hover:bg-gray-300 flex items-center">
              { stream.haveUpvoted? <BiDislike /> : <AiOutlineLike /> }
             </Button>
