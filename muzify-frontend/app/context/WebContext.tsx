@@ -82,12 +82,12 @@ export const WebSocketProvider:React.FC<{ children: React.ReactNode; roomId: str
         // console.log("we cam ehre to call", userId);
         // const ws = new WebSocket(process.env.WS_URL);
         // const ws = new WebSocket("ws://localhost:4000");
-        const ws = new WebSocket("wss://muzify-backend-production.up.railway.app");
+        const ws = new WebSocket("wss://crowdify-backend-production.up.railway.app");
 
         wsRef.current = ws;
 
         ws.onopen = () => {
-          // console.log("Connected to WebSocket", ws);
+          console.log("Connected to WebSocket", ws);
           setSocket(ws);
           ws.send(JSON.stringify({ type: "join", roomId: roomId, userId: userId }));
         };
