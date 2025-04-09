@@ -6,24 +6,24 @@ import Redis from "ioredis";
 
 dotenv.config();
 
-const PORT = process.env.WS_PORT || 4000;
-const SERVER_ID = process.env.SERVER_ID || `server-${Math.floor(Math.random() * 10000)}`;
-const REDIS_URI = process.env.REDIS_URL || "redis://localhost:6379";
+const PORT =  4000;
+const SERVER_ID = "music-room-main" || `server-${Math.floor(Math.random() * 10000)}`;
+const REDIS_URI = "rediss://default:ASqpAAIjcDE1OTlkNjcwMTMzN2Y0YjAwYWJiNWY3NDk5YzhkNjdiNXAxMA@knowing-humpback-10921.upstash.io:6379" || "redis://localhost:6379";
 
 const server = http.createServer();
 const wss = new WebSocketServer({ server });
 
-const redisClient = createClient({
-  socket: {
-    host: "localhost",
-    port: 6379,
-  },
-});
+// const redisClient = createClient({
+//   socket: {
+//     host: "localhost",
+//     port: 6379,
+//   },
+// });
 
 // Redis configuration for Railway
-// const redisClient = createClient({
-//   url: process.env.REDIS_URL || "redis://localhost:6379"
-// });
+ const redisClient = createClient({
+   url:"rediss://default:ASqpAAIjcDE1OTlkNjcwMTMzN2Y0YjAwYWJiNWY3NDk5YzhkNjdiNXAxMA@knowing-humpback-10921.upstash.io:6379" || "redis://localhost:6379"
+ });
 
 
 
