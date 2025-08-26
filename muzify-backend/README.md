@@ -7,7 +7,7 @@ Follow these steps to set up the backend for Muzify.
 ### Step 1: Clone the Frontend Repository
 First, clone the frontend repository:
 ```sh
-git clone https://github.com/Fahad-Dezloper/Muzify
+git clone https://github.com/anijeet/Muzify
 ```
 
 ### Step 2: Fork and Clone the Backend Repository
