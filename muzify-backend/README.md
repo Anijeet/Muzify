@@ -7,13 +7,13 @@ Follow these steps to set up the backend for Muzify.
 ### Step 1: Clone the Frontend Repository
 First, clone the frontend repository:
 ```sh
-git clone https://github.com/anijeet/Muzify
+git clone https://github.com/anijeet/Muzify/muzify-frontend
 ```
 
 ### Step 2: Fork and Clone the Backend Repository
 Fork the repository and then clone it to your local machine:
 ```sh
-git clone https://github.com/anijeet/muzify-backend
+git clone https://github.com/anijeet/Muzify/muzify-backend
 ```
 
 ### Step 3: Update Redis Configuration
